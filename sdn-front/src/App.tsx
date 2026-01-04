@@ -1,35 +1,75 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import { Wifi, Activity, Users } from 'lucide-react';
+import { NetworkMode } from './types';
+import { getModeConfig } from './utils/getModeConfig';
+import { useNetworkLogs } from './hooks/useNetworkLogs';
+import { StatusCard } from './components/StatusCard';
+import { CurrentModeCard } from './components/CurrentModeCard';
+import { ModeSelector } from './components/ModeSelector';
+import { GuestWifiControl } from './components/GuestWifiControl';
+import { AccessLogTable } from './components/AccessLogTable';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+  const [mode, setMode] = useState<NetworkMode>('normal');
+  const [guestWifi, setGuestWifi] = useState<boolean>(false);
+  const [priorityIP, setPriorityIP] = useState<string>('192.168.1.100');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  
+  const { logs } = useNetworkLogs();
+  const currentConfig = getModeConfig(mode);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-neutral-900 text-white p-6">
+      <div className="max-w-7xl mx-auto">
+        {/* ヘッダー */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
+            <Wifi className="w-10 h-10" />
+            SDNコントローラー
+          </h1>
+          <p className="text-gray-400">ネットワーク管理ダッシュボード</p>
+        </div>
 
-export default App
+        {/* ステータスカード */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <CurrentModeCard config={currentConfig} />
+          <StatusCard 
+            title="接続デバイス" 
+            value={8} 
+            subtitle="アクティブな接続" 
+            icon={Users} 
+          />
+          <StatusCard 
+            title="総帯域幅" 
+            value="32.5" 
+            subtitle="Mbps" 
+            icon={Activity} 
+          />
+        </div>
+
+        {/* モード切り替えセクション */}
+        <ModeSelector
+          mode={mode}
+          onModeChange={setMode}
+          priorityIP={priorityIP}
+          onPriorityIPChange={setPriorityIP}
+        />
+
+        {/* ゲストWi-Fi設定 */}
+        <GuestWifiControl 
+          enabled={guestWifi} 
+          onToggle={() => setGuestWifi(!guestWifi)} 
+        />
+
+        {/* アクセス監視ログ */}
+        <AccessLogTable 
+          logs={logs} 
+          searchTerm={searchTerm} 
+          onSearchChange={setSearchTerm} 
+        />
+      </div>
+    </div>
+  );
+};
+
+export default App;
