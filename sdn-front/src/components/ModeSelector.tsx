@@ -1,6 +1,6 @@
 import React from 'react';
 import { Activity, Clock, Zap } from 'lucide-react';
-import { NetworkMode } from '../types';
+import type { NetworkMode } from '../types';
 
 interface ModeSelectorProps {
   mode: NetworkMode;

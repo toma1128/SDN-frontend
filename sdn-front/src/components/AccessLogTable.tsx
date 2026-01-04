@@ -1,6 +1,6 @@
 import React from 'react';
 import { Search } from 'lucide-react';
-import { Log } from '../types';
+import type { Log } from '../types';
 
 interface AccessLogTableProps {
   logs: Log[];

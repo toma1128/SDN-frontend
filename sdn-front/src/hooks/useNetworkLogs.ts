@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Log } from '../types';
+import type { Log } from '../types';
 
 export const useNetworkLogs = () => {
   const [logs] = useState<Log[]>([

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModeConfig } from '../types';
+import type { ModeConfig } from '../types';
 
 interface CurrentModeCardProps {
   config: ModeConfig;

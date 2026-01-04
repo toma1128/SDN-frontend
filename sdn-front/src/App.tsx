@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Wifi, Activity, Users } from 'lucide-react';
-import { NetworkMode } from './types';
+import type { NetworkMode } from './types';
 import { getModeConfig } from './utils/getModeConfig';
 import { useNetworkLogs } from './hooks/useNetworkLogs';
 import { StatusCard } from './components/StatusCard';
@@ -20,7 +20,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-neutral-900 text-white p-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full mx-auto">
         {/* ヘッダー */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">

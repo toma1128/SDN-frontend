@@ -1,3 +1,5 @@
+import type { ElementType } from 'react';
+
 export type NetworkMode = 'normal' | 'low' | 'game';
 
 export interface Log {
@@ -11,6 +13,6 @@ export interface Log {
 export interface ModeConfig {
   name: string;
   color: string;
-  icon: React.ElementType;
+  icon: ElementType;
   desc: string;
 }

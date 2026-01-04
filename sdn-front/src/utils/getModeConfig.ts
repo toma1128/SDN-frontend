@@ -1,5 +1,5 @@
 import { Activity, Clock, Zap } from 'lucide-react';
-import { NetworkMode, ModeConfig } from '../types';
+import type { NetworkMode, ModeConfig } from '../types';
 
 export const getModeConfig = (mode: NetworkMode): ModeConfig => {
   switch(mode) {
